@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in [
+          "hafizahsaniqbalmr@gmail.com",
+          "basit7946@gmail.com"
+        ];
+    }
+    match /projects/{id} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.data.image is string
+        && request.resource.data.image.size() < 250000;
+      allow delete: if isAdmin();
+    }
+    match /services/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}
