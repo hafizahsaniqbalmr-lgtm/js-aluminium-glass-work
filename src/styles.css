@@ -95,3 +95,61 @@ footer .brand .mark{width:52px;height:52px}
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* MOTION PASS — visible ambient animations */
+.hero{isolation:isolate}
+.hero:before,.hero:after{
+  content:"";position:absolute;pointer-events:none;border-radius:50%;z-index:0;
+  filter:blur(2px);mix-blend-mode:screen
+}
+.hero:before{
+  width:380px;height:380px;right:-90px;top:16%;
+  background:radial-gradient(circle,rgba(76,139,158,.23),rgba(76,139,158,0) 68%);
+  animation:ambientFloat 9s ease-in-out infinite alternate
+}
+.hero:after{
+  width:300px;height:300px;left:-120px;bottom:0;
+  background:radial-gradient(circle,rgba(218,181,112,.16),rgba(218,181,112,0) 70%);
+  animation:ambientFloat 12s ease-in-out infinite alternate-reverse
+}
+.gridbg{animation:gridTravel 22s linear infinite}
+.hero h1 em{
+  background:linear-gradient(110deg,#a98349 10%,#fff0bd 42%,#d6b779 65%,#fff0bd 85%);
+  background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:goldShimmer 5s linear infinite
+}
+.hero-photo{animation:photoHover 7s ease-in-out infinite}
+.hero-photo:before{
+  content:"";position:absolute;inset:-1px;pointer-events:none;z-index:2;
+  border:1px solid rgba(255,235,185,.42);
+  animation:framePulse 4s ease-in-out infinite
+}
+.brand .mark{animation:logoPulse 3.8s ease-in-out infinite}
+.navwa svg{animation:iconFloat 3s ease-in-out infinite}
+.btn.gold{background-size:200% 100%;animation:buttonGlow 5s ease-in-out infinite}
+.service:nth-child(3n+1){animation:cardLift 6s ease-in-out infinite}
+.service:nth-child(3n+2){animation:cardLift 6s 1s ease-in-out infinite}
+.service:nth-child(3n){animation:cardLift 6s 2s ease-in-out infinite}
+.project img{transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .6s}
+.project:hover img{transform:scale(1.075)}
+@keyframes ambientFloat{
+  from{transform:translate3d(0,-18px,0) scale(.92);opacity:.65}
+  to{transform:translate3d(-35px,28px,0) scale(1.12);opacity:1}
+}
+@keyframes gridTravel{from{background-position:0 0,0 0}to{background-position:65px 65px,65px 65px}}
+@keyframes goldShimmer{from{background-position:200% center}to{background-position:-20% center}}
+@keyframes photoHover{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes framePulse{0%,100%{opacity:.35;inset:-1px}50%{opacity:.9;inset:5px}}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 0 0 rgba(226,194,127,.10),0 0 18px rgba(226,194,127,.08)}50%{box-shadow:0 0 0 7px rgba(226,194,127,.08),0 0 30px rgba(226,194,127,.25)}}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes buttonGlow{0%,100%{background-position:0% center}50%{background-position:100% center}}
+@keyframes cardLift{0%,85%,100%{transform:translateY(0)}92%{transform:translateY(-5px)}}
+@media(max-width:650px){
+  .hero:before{width:280px;height:280px;right:-100px;top:22%}
+  .hero-photo{animation:photoHover 8s ease-in-out infinite}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero:before,.hero:after,.gridbg,.hero h1 em,.hero-photo,.hero-photo:before,
+  .brand .mark,.navwa svg,.btn.gold,.service{animation:none!important}
+}
